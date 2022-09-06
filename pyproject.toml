@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pjecz-citas-v2-cli"
-version = "1.0"
+version = "1.0.0"
 description = "PJECZ Citas V2 Interfaz de Linea de Comandos para crear reportes"
 authors = ["Guillermo Valdes <guillermo.valdes@pjecz.gob.mx>"]
 
@@ -14,6 +14,7 @@ python-dotenv = "^0.20.0"
 tabulate = "^0.8.10"
 pandas = "^1.4.3"
 sendgrid = "^6.9.7"
+dominate = "^2.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"
@@ -23,3 +24,6 @@ black = "^22.6.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 256

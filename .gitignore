@@ -130,3 +130,6 @@ dmypy.json
 
 # Bashrc
 .bashrc
+
+# Cuando test es verdadero se crean archivos HTML para probar
+*.html
