@@ -1,5 +1,5 @@
 """
-CLI Commands Usuarios Request API
+CLI Usuarios Request API
 """
 from typing import Any
 

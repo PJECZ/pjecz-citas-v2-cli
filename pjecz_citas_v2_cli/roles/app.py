@@ -1,5 +1,5 @@
 """
-CLI Commands Roles App
+CLI Roles App
 """
 import rich
 import typer

@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Clientes Recuperaciones App
+CLI Cit Clientes Recuperaciones App
 """
 from datetime import datetime
 

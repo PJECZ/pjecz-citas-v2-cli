@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Clientes App
+CLI Cit Clientes App
 """
 from datetime import datetime
 

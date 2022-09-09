@@ -1,5 +1,5 @@
 """
-CLI Commands Distritos Request API
+CLI Distritos Request API
 """
 from typing import Any
 
