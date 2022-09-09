@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bashrc
+.bashrc
+
+# Cuando test es verdadero se crean archivos HTML para probar
+*.html
