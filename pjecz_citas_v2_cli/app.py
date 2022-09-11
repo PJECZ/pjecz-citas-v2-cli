@@ -11,6 +11,8 @@ from pjecz_citas_v2_cli.cit_clientes_registros.app import app as cit_clientes_re
 from pjecz_citas_v2_cli.cit_dias_disponibles.app import app as cit_dias_disponibles_app
 from pjecz_citas_v2_cli.cit_servicios.app import app as cit_servicios_app
 from pjecz_citas_v2_cli.distritos.app import app as distritos_app
+from pjecz_citas_v2_cli.enc_servicios.app import app as enc_servicios_app
+from pjecz_citas_v2_cli.enc_sistemas.app import app as enc_sistemas_app
 from pjecz_citas_v2_cli.materias.app import app as materias_app
 from pjecz_citas_v2_cli.oficinas.app import app as oficinas_app
 from pjecz_citas_v2_cli.roles.app import app as roles_app
@@ -25,6 +27,8 @@ app.add_typer(cit_clientes_registros_app, name="cit_clientes_registros")
 app.add_typer(cit_dias_disponibles_app, name="cit_dias_disponibles")
 app.add_typer(cit_servicios_app, name="cit_servicios")
 app.add_typer(distritos_app, name="distritos")
+app.add_typer(enc_servicios_app, name="enc_servicios")
+app.add_typer(enc_sistemas_app, name="enc_sistemas")
 app.add_typer(materias_app, name="materias")
 app.add_typer(oficinas_app, name="oficinas")
 app.add_typer(roles_app, name="roles")
