@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Citas Request API
+CLI Cit Citas Request API
 """
 from datetime import date
 from typing import Any

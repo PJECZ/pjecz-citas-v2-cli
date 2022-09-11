@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Categorias App
+CLI Cit Categorias App
 """
 import rich
 import typer

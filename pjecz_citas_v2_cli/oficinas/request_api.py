@@ -1,5 +1,5 @@
 """
-CLI Commands Oficinas Request API
+CLI Oficinas Request API
 """
 from typing import Any
 

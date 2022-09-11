@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Servicios App
+CLI Cit Servicios App
 """
 import rich
 import typer

@@ -1,5 +1,5 @@
 """
-CLI Commands Roles Request API
+CLI Roles Request API
 """
 from typing import Any
 

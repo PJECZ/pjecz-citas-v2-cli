@@ -1,5 +1,5 @@
 """
-CLI Commands Materias Request API
+CLI Materias Request API
 """
 from typing import Any
 

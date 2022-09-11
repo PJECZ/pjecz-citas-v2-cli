@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Categorias Request API
+CLI Cit Categorias Request API
 """
 from typing import Any
 

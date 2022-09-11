@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Servicios Request API
+CLI Cit Servicios Request API
 """
 from typing import Any
 

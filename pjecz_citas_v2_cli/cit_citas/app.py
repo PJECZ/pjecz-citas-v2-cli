@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Citas App
+CLI Cit Citas App
 """
 from datetime import datetime
 
@@ -60,7 +60,7 @@ def consultar(
 
     # Mostrar la tabla
     console = rich.console.Console()
-    table = rich.table.Table("ID", "Creado", "Oficina", "Inicio", "Nombre", "Servicio", "Estado")
+    table = rich.table.Table("ID", "Creado", "Oficina", "Inicio", "Nombre", "Servicio", "Estado", "C.A.")
     for registro in respuesta["items"]:
         creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
         inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
@@ -72,6 +72,7 @@ def consultar(
             registro["cit_cliente_nombre"],
             registro["cit_servicio_clave"],
             registro["estado"],
+            registro["codigo_asistencia"],
         )
     console.print(table)
 

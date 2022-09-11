@@ -1,5 +1,5 @@
 """
-CLI Commands Usuarios App
+CLI Usuarios App
 """
 import rich
 import typer

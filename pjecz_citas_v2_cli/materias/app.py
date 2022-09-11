@@ -1,5 +1,5 @@
 """
-CLI Commands Materias App
+CLI Materias App
 """
 import rich
 import typer

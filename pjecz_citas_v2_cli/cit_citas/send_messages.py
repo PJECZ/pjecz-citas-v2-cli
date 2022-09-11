@@ -1,5 +1,5 @@
 """
-CLI Commands Cit Citas Send Messages
+CLI Cit Citas Send Messages
 """
 from datetime import datetime, timedelta
 import locale

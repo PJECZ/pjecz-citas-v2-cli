@@ -1,5 +1,5 @@
 """
-CLI Commands Oficinas App
+CLI Oficinas App
 """
 import rich
 import typer

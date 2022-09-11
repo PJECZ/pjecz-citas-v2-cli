@@ -1,5 +1,5 @@
 """
-CLI Commands Distritos App
+CLI Distritos App
 """
 import rich
 import typer
