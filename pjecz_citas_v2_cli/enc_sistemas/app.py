@@ -6,7 +6,6 @@ from datetime import datetime
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -29,7 +28,6 @@ def consultar(
     # Solicitar datos
     try:
         respuesta = get_enc_sistemas(
-            authorization_header=authorization_header(),
             cit_cliente_id=cit_cliente_id,
             cit_cliente_email=cit_cliente_email,
             estado=estado,

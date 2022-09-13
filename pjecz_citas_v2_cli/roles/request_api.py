@@ -6,11 +6,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIStatusCodeError, CLIConnectionError, CLIResponseError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_roles(
-    authorization_header: dict,
     limit: int = LIMIT,
     offset: int = 0,
 ) -> Any:
@@ -21,7 +20,7 @@ def get_roles(
     try:
         response = requests.get(
             f"{BASE_URL}/roles",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )

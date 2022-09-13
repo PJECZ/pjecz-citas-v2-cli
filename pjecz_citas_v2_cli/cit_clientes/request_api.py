@@ -7,11 +7,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_cit_clientes(
-    authorization_header: dict,
     apellido_primero: str = None,
     apellido_segundo: str = None,
     curp: str = None,
@@ -40,7 +39,7 @@ def get_cit_clientes(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_clientes",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
@@ -58,7 +57,6 @@ def get_cit_clientes(
 
 
 def get_cit_clientes_creados_por_dia(
-    authorization_header: dict,
     creado: date = None,
     creado_desde: date = None,
     creado_hasta: date = None,
@@ -74,7 +72,6 @@ def get_cit_clientes_creados_por_dia(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_clientes/creados_por_dia",
-            headers=authorization_header,
             params=parametros,
             timeout=TIMEOUT,
         )

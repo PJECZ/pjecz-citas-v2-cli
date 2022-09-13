@@ -7,11 +7,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_cit_clientes_recuperaciones(
-    authorization_header: dict,
     email: str = None,
     limit: int = LIMIT,
     recuperado: bool = None,
@@ -28,7 +27,7 @@ def get_cit_clientes_recuperaciones(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_clientes_recuperaciones",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
@@ -46,7 +45,6 @@ def get_cit_clientes_recuperaciones(
 
 
 def get_cit_clientes_recuperaciones_creados_por_dia(
-    authorization_header: dict,
     creado: date = None,
     creado_desde: date = None,
     creado_hasta: date = None,
@@ -62,7 +60,7 @@ def get_cit_clientes_recuperaciones_creados_por_dia(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_clientes_recuperaciones/creados_por_dia",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )

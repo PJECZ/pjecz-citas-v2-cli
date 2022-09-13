@@ -4,7 +4,6 @@ CLI Cit Servicios App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -22,7 +21,6 @@ def consultar(
     rich.print("Consultar servicios...")
     try:
         respuesta = get_cit_servicios(
-            authorization_header=authorization_header(),
             limit=limit,
             offset=offset,
         )

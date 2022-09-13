@@ -4,7 +4,6 @@ CLI Cit Categorias App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -22,7 +21,6 @@ def consultar(
     rich.print("Consultar categorias...")
     try:
         respuesta = get_cit_categorias(
-            authorization_header=authorization_header(),
             limit=limit,
             offset=offset,
         )
