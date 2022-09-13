@@ -12,9 +12,10 @@ load_dotenv()
 HOST = os.getenv("HOST", "")
 BASE_URL = f"{HOST}/v2"
 
-# Default limit and timeout in seconds
-LIMIT = int(os.getenv("LIMIT", "40"))
-TIMEOUT = int(os.getenv("TIMEOUT", "12"))
+# API
+API_KEY = os.getenv("API_KEY", "")
+LIMIT = int(os.getenv("LIMIT", "40"))  # Number of records
+TIMEOUT = int(os.getenv("TIMEOUT", "12"))  # Timeout in seconds
 
 # Username and password
 USERNAME = os.getenv("USERNAME", "")

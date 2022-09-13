@@ -29,7 +29,6 @@ locale.setlocale(locale.LC_TIME, "es_MX.utf8")
 
 
 def send_agenda(
-    authorization_header: dict,
     email: str,
     inicio: str,
     oficina_clave: str,
@@ -46,7 +45,6 @@ def send_agenda(
 
     # Solicitar citas
     respuesta = get_cit_citas(
-        authorization_header=authorization_header,
         inicio=inicio,
         limit=limit,
         oficina_clave=oficina_clave,
@@ -113,7 +111,6 @@ def send_agenda(
 
 
 def send_informe_diario(
-    authorization_header: dict,
     email: str,
     test: bool = True,
 ) -> Any:
@@ -134,7 +131,6 @@ def send_informe_diario(
 
     # Solicitar citas agendadas por oficina y servicio para hoy
     ccaos_respuesta = get_cit_citas_agendadas_por_oficina_servicio(
-        authorization_header=authorization_header,
         inicio=hoy,
     )
 
@@ -166,7 +162,6 @@ def send_informe_diario(
 
     # Solicitar las cantidades de citas creadas por dia
     cccd_respuesta = get_cit_citas_creados_por_dia(
-        authorization_header=authorization_header,
         creado_desde=hace_siete_dias,
         creado_hasta=ayer,
     )

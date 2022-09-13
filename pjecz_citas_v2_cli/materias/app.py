@@ -4,7 +4,6 @@ CLI Materias App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -22,7 +21,6 @@ def consultar(
     rich.print("Consultar materias...")
     try:
         respuesta = get_materias(
-            authorization_header=authorization_header(),
             limit=limit,
             offset=offset,
         )

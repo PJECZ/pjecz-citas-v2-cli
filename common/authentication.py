@@ -8,7 +8,7 @@ from config.settings import HOST, USERNAME, PASSWORD, TIMEOUT
 
 
 def authorization_header() -> dict:
-    """Definir la cabecera para autentificarse en cada solicitud a la API"""
+    """Definir la cabecera para autentificarse con bearer token"""
     if HOST == "":
         raise CLIConfigurationError("No se ha definido el host")
     if USERNAME == "":

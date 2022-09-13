@@ -6,7 +6,6 @@ from datetime import datetime
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -26,7 +25,6 @@ def consultar(
     rich.print("Consultar recuperaciones de los clientes...")
     try:
         respuesta = get_cit_clientes_recuperaciones(
-            authorization_header=authorization_header(),
             email=email,
             limit=limit,
             recuperado=recuperado,
@@ -63,7 +61,6 @@ def mostrar_creados_por_dia(
     rich.print("Mostrar cantidades de recuperaciones creadas por dia...")
     try:
         respuesta = get_cit_clientes_recuperaciones_creados_por_dia(
-            authorization_header=authorization_header(),
             creado=creado,
             creado_desde=creado_desde,
             creado_hasta=creado_hasta,

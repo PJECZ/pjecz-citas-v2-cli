@@ -6,11 +6,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_enc_servicios(
-    authorization_header: dict,
     cit_cliente_id: int = None,
     cit_cliente_email: str = None,
     estado: str = None,
@@ -36,7 +35,7 @@ def get_enc_servicios(
     try:
         response = requests.get(
             f"{BASE_URL}/enc_servicios",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )

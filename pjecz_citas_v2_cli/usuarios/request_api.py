@@ -6,11 +6,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_usuarios(
-    authorization_header: dict,
     autoridad_id: int = None,
     autoridad_clave: str = None,
     limit: int = LIMIT,
@@ -33,7 +32,7 @@ def get_usuarios(
     try:
         response = requests.get(
             f"{BASE_URL}/usuarios",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )

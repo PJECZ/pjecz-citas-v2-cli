@@ -7,7 +7,6 @@ import pandas as pd
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from common.formats import df_to_table
 from config.settings import LIMIT
@@ -42,7 +41,6 @@ def consultar(
     # Solicitar datos
     try:
         respuesta = get_cit_citas(
-            authorization_header=authorization_header(),
             cit_cliente_id=cit_cliente_id,
             cit_cliente_email=cit_cliente_email,
             cit_servicio_id=cit_servicio_id,
@@ -92,7 +90,6 @@ def enviar(
     rich.print("Enviar mensaje con la agenda...")
     try:
         mensaje = send_agenda(
-            authorization_header=authorization_header(),
             email=email,
             inicio=inicio,
             oficina_clave=oficina_clave,
@@ -118,7 +115,6 @@ def mostrar_creados_por_dia(
     # Solicitar datos
     try:
         respuesta = get_cit_citas_creados_por_dia(
-            authorization_header=authorization_header(),
             creado=creado,
             creado_desde=creado_desde,
             creado_hasta=creado_hasta,
@@ -153,7 +149,6 @@ def mostrar_agendadas_por_oficina_servicio(
     # Solicitar datos
     try:
         respuesta = get_cit_citas_agendadas_por_oficina_servicio(
-            authorization_header=authorization_header(),
             inicio=inicio,
             inicio_desde=inicio_desde,
             inicio_hasta=inicio_hasta,
@@ -196,7 +191,6 @@ def enviar_informe_diario(
     rich.print("Enviar informe diario...")
     try:
         mensaje = send_informe_diario(
-            authorization_header=authorization_header(),
             email=email,
             test=test,
         )

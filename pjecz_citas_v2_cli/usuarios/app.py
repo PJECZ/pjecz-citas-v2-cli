@@ -4,7 +4,6 @@ CLI Usuarios App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -26,7 +25,6 @@ def consultar(
     rich.print("Consultar usuarios...")
     try:
         respuesta = get_usuarios(
-            authorization_header=authorization_header(),
             autoridad_id=autoridad_id,
             autoridad_clave=autoridad_clave,
             limit=limit,

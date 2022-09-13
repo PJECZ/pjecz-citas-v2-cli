@@ -7,11 +7,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_cit_citas(
-    authorization_header: dict,
     cit_cliente_id: int = None,
     cit_cliente_email: str = None,
     cit_servicio_id: int = None,
@@ -46,7 +45,7 @@ def get_cit_citas(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_citas",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
@@ -64,7 +63,6 @@ def get_cit_citas(
 
 
 def get_cit_citas_creados_por_dia(
-    authorization_header: dict,
     creado: date = None,
     creado_desde: date = None,
     creado_hasta: date = None,
@@ -83,7 +81,7 @@ def get_cit_citas_creados_por_dia(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_citas/creados_por_dia",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
@@ -101,7 +99,6 @@ def get_cit_citas_creados_por_dia(
 
 
 def get_cit_citas_agendadas_por_oficina_servicio(
-    authorization_header: dict,
     inicio: date = None,
     inicio_desde: date = None,
     inicio_hasta: date = None,
@@ -117,7 +114,7 @@ def get_cit_citas_agendadas_por_oficina_servicio(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_citas/agendadas_por_servicio_oficina",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )

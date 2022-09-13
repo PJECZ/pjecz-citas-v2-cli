@@ -4,7 +4,6 @@ CLI Commnads Cit Dias Disponibles App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -21,7 +20,6 @@ def consultar(
     rich.print("Consultar dias disponibles...")
     try:
         respuesta = get_cit_dias_disponibles(
-            authorization_header=authorization_header(),
             limit=limit,
         )
     except CLIAnyError as error:
@@ -39,9 +37,7 @@ def proximo():
     """Consultar proximo dia hábil"""
     rich.print("Consultar proximo dia hábil...")
     try:
-        respuesta = get_cit_dia_disponible(
-            authorization_header=authorization_header(),
-        )
+        respuesta = get_cit_dia_disponible()
     except CLIAnyError as error:
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()

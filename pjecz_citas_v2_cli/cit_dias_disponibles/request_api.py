@@ -6,11 +6,10 @@ from typing import Any
 import requests
 
 from common.exceptions import CLIConnectionError, CLIResponseError, CLIStatusCodeError
-from config.settings import BASE_URL, LIMIT, TIMEOUT
+from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_cit_dias_disponibles(
-    authorization_header: dict,
     limit: int = LIMIT,
 ) -> Any:
     """Solicitar dias disponibles, entrega un listado de fechas"""
@@ -18,7 +17,7 @@ def get_cit_dias_disponibles(
     try:
         response = requests.get(
             f"{BASE_URL}/cit_dias_disponibles",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
@@ -33,14 +32,12 @@ def get_cit_dias_disponibles(
     return data_json
 
 
-def get_cit_dia_disponible(
-    authorization_header: dict,
-) -> Any:
+def get_cit_dia_disponible() -> Any:
     """Solicitar el proximo dia disponible, por ejemplo, si hoy es viernes y el lunes es dia inhabil, entrega el martes"""
     try:
         response = requests.get(
             f"{BASE_URL}/cit_dias_disponibles/proximo",
-            headers=authorization_header,
+            headers={"X-Api-Key": API_KEY},
             timeout=TIMEOUT,
         )
         response.raise_for_status()

@@ -4,7 +4,6 @@ CLI Oficinas App
 import rich
 import typer
 
-from common.authentication import authorization_header
 from common.exceptions import CLIAnyError
 from config.settings import LIMIT
 
@@ -25,7 +24,6 @@ def consultar(
     rich.print("Consultar oficinas...")
     try:
         respuesta = get_oficinas(
-            authorization_header=authorization_header(),
             distrito_id=distrito_id,
             domicilio_id=domicilio_id,
             limit=limit,
