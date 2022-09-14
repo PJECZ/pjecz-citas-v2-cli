@@ -18,20 +18,22 @@ def get_cit_servicios(
     if offset > 0:
         parametros["offset"] = offset
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_servicios",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_servicios") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar servicios") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_servicios: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar servicios: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_servicios") from error
-    data_json = response.json()
-    if "items" not in data_json or "total" not in data_json:
-        raise CLIResponseError("No se recibio items o total en la respuesta al solicitar cit_servicios")
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar servicios") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar servicios: " + datos["message"])
+        raise CLIResponseError("Error al solicitar servicios")
+    return datos["result"]

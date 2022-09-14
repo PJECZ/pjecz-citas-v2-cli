@@ -43,23 +43,25 @@ def get_cit_citas(
     if offset > 0:
         parametros["offset"] = offset
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_citas",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_citas") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar citas") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_citas: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar citas: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_citas") from error
-    data_json = response.json()
-    if "items" not in data_json or "total" not in data_json:
-        raise CLIResponseError("No se recibio items o total al solicitar cit_citas")
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar citas") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar citas: " + datos["message"])
+        raise CLIResponseError("Error al solicitar citas")
+    return datos["result"]
 
 
 def get_cit_citas_creados_por_dia(
@@ -79,23 +81,25 @@ def get_cit_citas_creados_por_dia(
     if distrito_id is not None:
         parametros["distrito_id"] = distrito_id
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_citas/creados_por_dia",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_citas") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar citas") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_citas: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar citas: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_citas") from error
-    data_json = response.json()
-    if "items" not in data_json or "total" not in data_json:
-        raise CLIResponseError("No se recibio items o total al solicitar cit_citas")
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar citas") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar citas: " + datos["message"])
+        raise CLIResponseError("Error al solicitar citas")
+    return datos["result"]
 
 
 def get_cit_citas_agendadas_por_oficina_servicio(
@@ -112,20 +116,22 @@ def get_cit_citas_agendadas_por_oficina_servicio(
     if inicio_hasta is not None:
         parametros["inicio_hasta"] = inicio_hasta
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_citas/agendadas_por_servicio_oficina",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_citas") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar citas") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_citas: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar citas: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_citas") from error
-    data_json = response.json()
-    if "items" not in data_json or "total" not in data_json:
-        raise CLIResponseError("No se recibio items o total al solicitar cit_citas")
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar citas") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar citas: " + datos["message"])
+        raise CLIResponseError("Error al solicitar citas")
+    return datos["result"]

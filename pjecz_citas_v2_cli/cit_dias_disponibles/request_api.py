@@ -15,39 +15,45 @@ def get_cit_dias_disponibles(
     """Solicitar dias disponibles, entrega un listado de fechas"""
     parametros = {"limit": limit}
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_dias_disponibles",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_dias_disponibles") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar dias disponibles") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_dias_disponibles: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar dias disponibles: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_dias_disponibles") from error
-    data_json = response.json()
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar dias disponibles") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar dias disponibles: " + datos["message"])
+        raise CLIResponseError("Error al solicitar dias disponibles")
+    return datos["result"]
 
 
 def get_cit_dia_disponible() -> Any:
     """Solicitar el proximo dia disponible, por ejemplo, si hoy es viernes y el lunes es dia inhabil, entrega el martes"""
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/cit_dias_disponibles/proximo",
             headers={"X-Api-Key": API_KEY},
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar cit_dias_disponibles") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar dias disponibles") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar cit_dias_disponibles: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar dias disponibles: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar cit_dias_disponibles") from error
-    data_json = response.json()
-    if "fecha" not in data_json:
-        raise CLIResponseError("No se recibio la fecha en la respuesta al solicitar cit_dias_disponibles")
-    return data_json
+        raise CLIConnectionError("Error inesperado al solicitar dias disponibles") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar dias disponibles: " + datos["message"])
+        raise CLIResponseError("Error al solicitar dias disponibles")
+    return datos["result"]

@@ -30,20 +30,22 @@ def get_usuarios(
     if oficina_clave is not None:
         parametros["oficina_clave"] = oficina_clave
     try:
-        response = requests.get(
+        respuesta = requests.get(
             f"{BASE_URL}/usuarios",
             headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
-        response.raise_for_status()
+        respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
         raise CLIStatusCodeError("No hubo respuesta al solicitar usuarios") from error
     except requests.exceptions.HTTPError as error:
         raise CLIStatusCodeError("Error Status Code al solicitar usuarios: " + str(error)) from error
     except requests.exceptions.RequestException as error:
         raise CLIConnectionError("Error inesperado al solicitar usuarios") from error
-    data_json = response.json()
-    if "items" not in data_json or "total" not in data_json:
-        raise CLIResponseError("No se recibio items o total en la respuesta al solicitar usuarios")
-    return data_json
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar usuarios: " + datos["message"])
+        raise CLIResponseError("Error al solicitar usuarios")
+    return datos["result"]
