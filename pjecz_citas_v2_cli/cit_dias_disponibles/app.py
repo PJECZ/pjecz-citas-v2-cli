@@ -14,20 +14,20 @@ app = typer.Typer()
 
 @app.command()
 def consultar(
-    limit: int = LIMIT,
+    size: int = LIMIT,
 ):
     """Consultar dias disponibles"""
     rich.print("Consultar dias disponibles...")
     try:
         respuesta = get_cit_dias_disponibles(
-            limit=limit,
+            size=size,
         )
     except CLIAnyError as error:
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()
     console = rich.console.Console()
     table = rich.table.Table("Fecha")
-    for registro in respuesta:
+    for registro in respuesta["items"]:
         table.add_row(registro["fecha"])
     console.print(table)
 
@@ -37,8 +37,8 @@ def proximo():
     """Consultar proximo dia hábil"""
     rich.print("Consultar proximo dia hábil...")
     try:
-        respuesta = get_cit_dia_disponible()
+        fecha = get_cit_dia_disponible()
     except CLIAnyError as error:
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()
-    rich.print(f"Proximo dia hábil: [green]{respuesta['fecha']}[/green]")
+    rich.print(f"Proximo dia hábil: [green]{fecha}[/green]")

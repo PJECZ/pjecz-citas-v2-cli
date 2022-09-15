@@ -10,10 +10,10 @@ from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_cit_dias_disponibles(
-    limit: int = LIMIT,
+    size: int = LIMIT,
 ) -> Any:
     """Solicitar dias disponibles, entrega un listado de fechas"""
-    parametros = {"limit": limit}
+    parametros = {"size": size}
     try:
         respuesta = requests.get(
             f"{BASE_URL}/cit_dias_disponibles",
@@ -46,14 +46,12 @@ def get_cit_dia_disponible() -> Any:
         )
         respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar dias disponibles") from error
+        raise CLIStatusCodeError("No hubo respuesta al solicitar el proximo dia disponible") from error
     except requests.exceptions.HTTPError as error:
-        raise CLIStatusCodeError("Error Status Code al solicitar dias disponibles: " + str(error)) from error
+        raise CLIStatusCodeError("Error Status Code al solicitar el proximo dia disponible: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar dias disponibles") from error
+        raise CLIConnectionError("Error inesperado al solicitar el proximo dia disponible") from error
     datos = respuesta.json()
-    if "success" not in datos or datos["success"] is False or "result" not in datos:
-        if "message" in datos:
-            raise CLIResponseError("Error al solicitar dias disponibles: " + datos["message"])
-        raise CLIResponseError("Error al solicitar dias disponibles")
-    return datos["result"]
+    if "fecha" not in datos:
+        raise CLIResponseError("Error al solicitar el proximo dia disponible")
+    return datos["fecha"]
