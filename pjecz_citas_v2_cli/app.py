@@ -3,6 +3,7 @@ Command Line Interface
 """
 import typer
 
+from pjecz_citas_v2_cli.autoridades.app import app as autoridades_app
 from pjecz_citas_v2_cli.cit_categorias.app import app as cit_categorias_app
 from pjecz_citas_v2_cli.cit_citas.app import app as cit_citas_app
 from pjecz_citas_v2_cli.cit_clientes.app import app as cit_clientes_app
@@ -19,6 +20,7 @@ from pjecz_citas_v2_cli.roles.app import app as roles_app
 from pjecz_citas_v2_cli.usuarios.app import app as usuarios_app
 
 app = typer.Typer()
+app.add_typer(autoridades_app, name="autoridades")
 app.add_typer(cit_categorias_app, name="cit_categorias")
 app.add_typer(cit_citas_app, name="cit_citas")
 app.add_typer(cit_clientes_app, name="cit_clientes")
