@@ -48,9 +48,9 @@ def consultar(
             creado.strftime("%Y-%m-%d %H:%M:%S"),
             registro["cit_cliente_email"],
             registro["cit_cliente_nombre"],
-            registro["respuesta_01"],
-            registro["respuesta_02"],
-            registro["respuesta_03"],
+            "" if registro["respuesta_01"] is None else str(registro["respuesta_01"]),
+            "" if registro["respuesta_02"] is None else str(registro["respuesta_02"]),
+            "" if registro["respuesta_03"] is None else str(registro["respuesta_03"]),
             registro["estado"],
         )
     console.print(table)
