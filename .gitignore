@@ -133,3 +133,6 @@ dmypy.json
 
 # Cuando test es verdadero se crean archivos HTML para probar
 *.html
+
+# No subir los datos guardados en archivos CSV
+*.csv

@@ -16,6 +16,7 @@ app = typer.Typer()
 def consultar(
     distrito_id: int = None,
     domicilio_id: int = None,
+    estatus: str = None,
     limit: int = LIMIT,
     puede_agendar_citas: bool = True,
     offset: int = 0,
@@ -26,6 +27,7 @@ def consultar(
         respuesta = get_oficinas(
             distrito_id=distrito_id,
             domicilio_id=domicilio_id,
+            estatus=estatus,
             limit=limit,
             puede_agendar_citas=puede_agendar_citas,
             offset=offset,

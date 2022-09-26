@@ -5,13 +5,14 @@ from typing import Any
 
 import requests
 
-from common.exceptions import CLIStatusCodeError, CLIConnectionError, CLIResponseError
+from common.exceptions import CLIConnectionError, CLIRequestError, CLIResponseError, CLIStatusCodeError
 from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_oficinas(
     distrito_id: int = None,
     domicilio_id: int = None,
+    estatus: str = None,
     limit: int = LIMIT,
     puede_agendar_citas: bool = None,
     offset: int = 0,
@@ -22,6 +23,8 @@ def get_oficinas(
         parametros["distrito_id"] = distrito_id
     if domicilio_id is not None:
         parametros["domicilio_id"] = domicilio_id
+    if estatus is not None:
+        parametros["estatus"] = estatus
     if puede_agendar_citas is not None:
         parametros["puede_agendar_citas"] = puede_agendar_citas
     if offset > 0:
@@ -35,11 +38,11 @@ def get_oficinas(
         )
         respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar oficinas") from error
+        raise CLIConnectionError("No hubo respuesta al solicitar oficinas") from error
     except requests.exceptions.HTTPError as error:
         raise CLIStatusCodeError("Error Status Code al solicitar oficinas: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar oficinas") from error
+        raise CLIRequestError("Error inesperado al solicitar oficinas") from error
     datos = respuesta.json()
     if "success" not in datos or datos["success"] is False or "result" not in datos:
         if "message" in datos:

@@ -1,6 +1,7 @@
 """
 CLI Cit Citas App
 """
+import csv
 from datetime import datetime
 
 import pandas as pd
@@ -30,6 +31,7 @@ def consultar(
     cit_servicio_clave: str = None,
     estado: str = None,
     inicio: str = None,
+    guardar: bool = False,
     limit: int = LIMIT,
     oficina_id: int = None,
     oficina_clave: str = None,
@@ -56,9 +58,39 @@ def consultar(
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()
 
+    # Encabezados
+    encabezados = ["ID", "Creado", "Oficina", "Inicio", "Nombre", "e-mail", "Servicio", "Estado", "C.A."]
+
+    # Guardar datos en un archivo CSV
+    if guardar:
+        fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+        nombre_archivo_csv = f"cit_citas_{fecha_hora}.csv"
+        with open(nombre_archivo_csv, "w", encoding="utf-8") as archivo:
+            escritor = csv.writer(archivo)
+            escritor.writerow(encabezados)
+            for registro in respuesta["items"]:
+                creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
+                inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
+                escritor.writerow(
+                    [
+                        str(registro["id"]),
+                        creado.strftime("%Y-%m-%d %H:%M:%S"),
+                        registro["oficina_clave"],
+                        inicio.strftime("%Y-%m-%d %H:%M:%S"),
+                        registro["cit_cliente_nombre"],
+                        registro["cit_cliente_email"],
+                        registro["cit_servicio_clave"],
+                        registro["estado"],
+                        registro["codigo_asistencia"],
+                    ]
+                )
+        rich.print(f"Datos guardados en el archivo {nombre_archivo_csv}")
+
     # Mostrar la tabla
     console = rich.console.Console()
-    table = rich.table.Table("ID", "Creado", "Oficina", "Inicio", "Nombre", "Servicio", "Estado", "C.A.")
+    table = rich.table.Table()
+    for enca in encabezados:
+        table.add_column(enca)
     for registro in respuesta["items"]:
         creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
         inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
@@ -68,6 +100,7 @@ def consultar(
             registro["oficina_clave"],
             inicio.strftime("%Y-%m-%d %H:%M:%S"),
             registro["cit_cliente_nombre"],
+            registro["cit_cliente_email"],
             registro["cit_servicio_clave"],
             registro["estado"],
             registro["codigo_asistencia"],

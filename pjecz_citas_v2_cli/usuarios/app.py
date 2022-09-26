@@ -16,6 +16,7 @@ app = typer.Typer()
 def consultar(
     autoridad_id: int = None,
     autoridad_clave: str = None,
+    estatus: str = None,
     limit: int = LIMIT,
     oficina_id: int = None,
     oficina_clave: str = None,
@@ -27,6 +28,7 @@ def consultar(
         respuesta = get_usuarios(
             autoridad_id=autoridad_id,
             autoridad_clave=autoridad_clave,
+            estatus=estatus,
             limit=limit,
             oficina_id=oficina_id,
             oficina_clave=oficina_clave,

@@ -5,16 +5,19 @@ from typing import Any
 
 import requests
 
-from common.exceptions import CLIStatusCodeError, CLIConnectionError, CLIResponseError
+from common.exceptions import CLIConnectionError, CLIRequestError, CLIResponseError, CLIStatusCodeError
 from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_roles(
+    estatus: str = None,
     limit: int = LIMIT,
     offset: int = 0,
 ) -> Any:
     """Solicitar roles"""
     parametros = {"limit": limit}
+    if estatus is not None:
+        parametros["estatus"] = estatus
     if offset > 0:
         parametros["offset"] = offset
     try:
@@ -26,11 +29,11 @@ def get_roles(
         )
         respuesta.raise_for_status()
     except requests.exceptions.ConnectionError as error:
-        raise CLIStatusCodeError("No hubo respuesta al solicitar roles") from error
+        raise CLIConnectionError("No hubo respuesta al solicitar roles") from error
     except requests.exceptions.HTTPError as error:
         raise CLIStatusCodeError("Error Status Code al solicitar roles: " + str(error)) from error
     except requests.exceptions.RequestException as error:
-        raise CLIConnectionError("Error inesperado al solicitar roles") from error
+        raise CLIRequestError("Error inesperado al solicitar roles") from error
     datos = respuesta.json()
     if "success" not in datos or datos["success"] is False or "result" not in datos:
         if "message" in datos:
