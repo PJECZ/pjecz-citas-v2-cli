@@ -14,6 +14,7 @@ app = typer.Typer()
 
 @app.command()
 def consultar(
+    estatus: str = None,
     limit: int = LIMIT,
     offset: int = 0,
 ):
@@ -21,6 +22,7 @@ def consultar(
     rich.print("Consultar roles...")
     try:
         respuesta = get_roles(
+            estatus=estatus,
             limit=limit,
             offset=offset,
         )

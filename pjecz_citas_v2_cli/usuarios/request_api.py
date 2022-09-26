@@ -12,6 +12,7 @@ from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 def get_usuarios(
     autoridad_id: int = None,
     autoridad_clave: str = None,
+    estatus: str = None,
     limit: int = LIMIT,
     oficina_id: int = None,
     oficina_clave: str = None,
@@ -23,6 +24,8 @@ def get_usuarios(
         parametros["autoridad_id"] = autoridad_id
     if autoridad_clave is not None:
         parametros["autoridad_clave"] = autoridad_clave
+    if estatus is not None:
+        parametros["estatus"] = estatus
     if offset > 0:
         parametros["offset"] = offset
     if oficina_id is not None:

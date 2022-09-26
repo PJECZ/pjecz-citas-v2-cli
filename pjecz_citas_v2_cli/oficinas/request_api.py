@@ -12,6 +12,7 @@ from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 def get_oficinas(
     distrito_id: int = None,
     domicilio_id: int = None,
+    estatus: str = None,
     limit: int = LIMIT,
     puede_agendar_citas: bool = None,
     offset: int = 0,
@@ -22,6 +23,8 @@ def get_oficinas(
         parametros["distrito_id"] = distrito_id
     if domicilio_id is not None:
         parametros["domicilio_id"] = domicilio_id
+    if estatus is not None:
+        parametros["estatus"] = estatus
     if puede_agendar_citas is not None:
         parametros["puede_agendar_citas"] = puede_agendar_citas
     if offset > 0:

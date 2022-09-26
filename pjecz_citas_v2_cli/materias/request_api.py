@@ -10,11 +10,14 @@ from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 
 
 def get_materias(
+    estatus: str = None,
     limit: int = LIMIT,
     offset: int = 0,
 ) -> Any:
     """Solicitar materias"""
     parametros = {"limit": limit}
+    if estatus is not None:
+        parametros["estatus"] = estatus
     if offset > 0:
         parametros["offset"] = offset
     try:
