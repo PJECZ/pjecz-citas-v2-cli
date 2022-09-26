@@ -74,6 +74,7 @@ def get_cit_clientes_creados_por_dia(
     try:
         respuesta = requests.get(
             f"{BASE_URL}/cit_clientes/creados_por_dia",
+            headers={"X-Api-Key": API_KEY},
             params=parametros,
             timeout=TIMEOUT,
         )
