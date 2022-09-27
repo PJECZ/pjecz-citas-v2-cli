@@ -13,7 +13,7 @@ from common.formats import df_to_table
 from config.settings import LIMIT
 
 from .request_api import get_cit_citas, get_cit_citas_agendadas_por_oficina_servicio, get_cit_citas_creados_por_dia
-from .send_messages import send_agenda, send_informe_diario
+from .send_messages import send_agenda, send_agenda_a_usuarios, send_informe_diario
 
 app = typer.Typer()
 
@@ -162,8 +162,8 @@ def mostrar_creados_por_dia(
     table = rich.table.Table()
     table.add_column("Creado")
     table.add_column("Cantidad", justify="right")
-    for creado, cantidad in respuesta["items"].items():
-        table.add_row(creado, str(cantidad))
+    for item in respuesta["items"]:
+        table.add_row(item["creado"], str(item["cantidad"]))
     console.print(table)
 
     # Mostrar el total
@@ -235,8 +235,15 @@ def enviar_informe_diario(
 
 @app.command()
 def enviar_agenda_a_usuarios(
-    limit: int = 200,
     test: bool = True,
 ):
     """Enviar la agenda de las citas a los usuarios"""
     rich.print("Enviar la agenda de las citas a los usuarios...")
+    try:
+        mensaje = send_agenda_a_usuarios(
+            test=test,
+        )
+    except CLIAnyError as error:
+        typer.secho(str(error), fg=typer.colors.RED)
+        raise typer.Exit()
+    rich.print(mensaje)
