@@ -55,7 +55,7 @@ def consultar(
             for registro in respuesta["items"]:
                 escritor.writerow(
                     [
-                        str(registro["id"]),
+                        registro["id"],
                         registro["clave"],
                         registro["distrito_nombre_corto"],
                         registro["descripcion_corta"],
