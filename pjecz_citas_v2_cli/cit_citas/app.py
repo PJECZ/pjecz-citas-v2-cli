@@ -73,7 +73,7 @@ def consultar(
                 inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
                 escritor.writerow(
                     [
-                        str(registro["id"]),
+                        registro["id"],
                         creado.strftime("%Y-%m-%d %H:%M:%S"),
                         registro["oficina_clave"],
                         inicio.strftime("%Y-%m-%d %H:%M:%S"),
