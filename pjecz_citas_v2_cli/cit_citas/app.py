@@ -59,7 +59,7 @@ def consultar(
         raise typer.Exit()
 
     # Encabezados
-    encabezados = ["ID", "Creado", "Oficina", "Inicio", "Nombre", "e-mail", "Servicio", "Estado", "C.A."]
+    encabezados = ["ID", "Creado", "Oficina", "Inicio", "Nombre", "e-mail", "Servicio", "Estado", "P.C.?", "C.A."]
 
     # Guardar datos en un archivo CSV
     if guardar:
@@ -81,6 +81,7 @@ def consultar(
                         registro["cit_cliente_email"],
                         registro["cit_servicio_clave"],
                         registro["estado"],
+                        "SI" if registro["puede_cancelarse"] else "",
                         registro["codigo_asistencia"],
                     ]
                 )
@@ -103,6 +104,7 @@ def consultar(
             registro["cit_cliente_email"],
             registro["cit_servicio_clave"],
             registro["estado"],
+            "SI" if registro["puede_cancelarse"] else "",
             registro["codigo_asistencia"],
         )
     console.print(table)
