@@ -65,7 +65,6 @@ def consultar(
                         str(registro["limite_personas"]),
                     ]
                 )
-        rich.print(f"Datos guardados en el archivo {nombre_archivo_csv}")
 
     # Mostrar la tabla
     console = rich.console.Console()
@@ -87,3 +86,5 @@ def consultar(
 
     # Mostrar el total
     rich.print(f"Total: [green]{respuesta['total']}[/green] oficinas")
+    if guardar:
+        rich.print(f"Datos guardados en el archivo [blue]{nombre_archivo_csv}[/blue]")
