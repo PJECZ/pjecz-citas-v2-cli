@@ -143,6 +143,7 @@ def mostrar_creados_por_dia(
     creado_desde: str = None,
     creado_hasta: str = None,
     distrito_id: int = None,
+    guardar: bool = False,
 ):
     """Mostrar cantidades de citas creadas por dia"""
     rich.print("Mostrar cantidades de citas creadas por dia...")
@@ -159,17 +160,37 @@ def mostrar_creados_por_dia(
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()
 
+    # Encabezados
+    encabezados = ["Creado", "Cantidad"]
+
+    # Guardar datos en un archivo CSV
+    if guardar:
+        fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+        nombre_archivo_csv = f"cit_citas_creadas_por_dia_{fecha_hora}.csv"
+        with open(nombre_archivo_csv, "w", encoding="utf-8") as archivo:
+            escritor = csv.writer(archivo)
+            escritor.writerow(encabezados)
+            for registro in respuesta["items"]:
+                escritor.writerow(
+                    [
+                        registro["creado"],
+                        registro["cantidad"],
+                    ]
+                )
+
     # Mostrar la tabla
     console = rich.console.Console()
     table = rich.table.Table()
-    table.add_column("Creado")
-    table.add_column("Cantidad", justify="right")
+    table.add_column(encabezados[0])
+    table.add_column(encabezados[1], justify="right")
     for item in respuesta["items"]:
         table.add_row(item["creado"], str(item["cantidad"]))
     console.print(table)
 
     # Mostrar el total
     rich.print(f"Total: [green]{respuesta['total']}[/green] citas")
+    if guardar:
+        rich.print(f"Datos guardados en el archivo {nombre_archivo_csv}")
 
 
 @app.command()
@@ -177,6 +198,7 @@ def mostrar_agendadas_por_oficina_servicio(
     inicio: str = None,
     inicio_desde: str = None,
     inicio_hasta: str = None,
+    guardar: bool = False,
 ):
     """Mostrar cantidades de citas agendadas por oficina y servicio"""
     rich.print("Mostrar cantidades de citas agendadas por oficina y servicio...")
@@ -207,6 +229,12 @@ def mostrar_agendadas_por_oficina_servicio(
         aggfunc="sum",
     )
 
+    # Guardar datos en un archivo CSV
+    if guardar:
+        fecha_hora = datetime.now().strftime("%Y%m%d%H%M%S")
+        nombre_archivo_csv = f"cit_citas_agendadas_por_oficina_servicio_{fecha_hora}.csv"
+        pivot_table.to_csv(nombre_archivo_csv)
+
     # Mostrar la tabla
     tabla = rich.table.Table(show_lines=False)
     tabla = df_to_table(pivot_table, tabla, "Oficinas")
@@ -215,6 +243,8 @@ def mostrar_agendadas_por_oficina_servicio(
 
     # Mostrar el total
     rich.print(f"Total: [green]{respuesta['total']}[/green] citas")
+    if guardar:
+        rich.print(f"Datos guardados en el archivo {nombre_archivo_csv}")
 
 
 @app.command()
