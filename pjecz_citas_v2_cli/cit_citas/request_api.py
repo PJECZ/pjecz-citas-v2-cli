@@ -102,6 +102,41 @@ def get_cit_citas_creados_por_dia(
     return datos["result"]
 
 
+def get_cit_citas_creados_por_dia_distrito(
+    creado: date = None,
+    creado_desde: date = None,
+    creado_hasta: date = None,
+) -> Any:
+    """Solicitar cantidades de citas creadas por dia"""
+    parametros = {}
+    if creado is not None:
+        parametros["creado"] = creado
+    if creado_desde is not None:
+        parametros["creado_desde"] = creado_desde
+    if creado_hasta is not None:
+        parametros["creado_hasta"] = creado_hasta
+    try:
+        respuesta = requests.get(
+            f"{BASE_URL}/cit_citas/creados_por_dia_distrito",
+            headers={"X-Api-Key": API_KEY},
+            params=parametros,
+            timeout=TIMEOUT,
+        )
+        respuesta.raise_for_status()
+    except requests.exceptions.ConnectionError as error:
+        raise CLIStatusCodeError("No hubo respuesta al solicitar citas") from error
+    except requests.exceptions.HTTPError as error:
+        raise CLIStatusCodeError("Error Status Code al solicitar citas: " + str(error)) from error
+    except requests.exceptions.RequestException as error:
+        raise CLIConnectionError("Error inesperado al solicitar citas") from error
+    datos = respuesta.json()
+    if "success" not in datos or datos["success"] is False or "result" not in datos:
+        if "message" in datos:
+            raise CLIResponseError("Error al solicitar citas: " + datos["message"])
+        raise CLIResponseError("Error al solicitar citas")
+    return datos["result"]
+
+
 def get_cit_citas_agendadas_por_oficina_servicio(
     inicio: date = None,
     inicio_desde: date = None,
