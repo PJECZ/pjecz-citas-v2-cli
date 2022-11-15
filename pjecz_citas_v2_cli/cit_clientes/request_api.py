@@ -13,8 +13,10 @@ from config.settings import API_KEY, BASE_URL, LIMIT, TIMEOUT
 def get_cit_clientes(
     apellido_primero: str = None,
     apellido_segundo: str = None,
+    autoriza_mensajes: bool = None,
     curp: str = None,
     email: str = None,
+    enviar_boletin: bool = None,
     limit: int = LIMIT,
     nombres: str = None,
     offset: int = 0,
@@ -26,10 +28,14 @@ def get_cit_clientes(
         parametros["apellido_primero"] = apellido_primero
     if apellido_segundo is not None:
         parametros["apellido_segundo"] = apellido_segundo
+    if autoriza_mensajes is not None:
+        parametros["autoriza_mensajes"] = autoriza_mensajes
     if curp is not None:
         parametros["curp"] = curp
     if email is not None:
         parametros["email"] = email
+    if enviar_boletin is not None:
+        parametros["enviar_boletin"] = enviar_boletin
     if nombres is not None:
         parametros["nombres"] = nombres
     if offset > 0:
