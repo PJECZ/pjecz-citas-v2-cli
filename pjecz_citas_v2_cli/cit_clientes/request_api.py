@@ -16,11 +16,11 @@ def get_cit_clientes(
     autoriza_mensajes: bool = None,
     curp: str = None,
     email: str = None,
+    enviar_boletin: bool = None,
     limit: int = LIMIT,
     nombres: str = None,
     offset: int = 0,
     telefono: str = None,
-    enviar_boletin: bool = None,
 ) -> Any:
     """Solicitar el listado de clientes"""
     parametros = {"limit": limit}
@@ -34,14 +34,14 @@ def get_cit_clientes(
         parametros["curp"] = curp
     if email is not None:
         parametros["email"] = email
+    if enviar_boletin is not None:
+        parametros["enviar_boletin"] = enviar_boletin
     if nombres is not None:
         parametros["nombres"] = nombres
     if offset > 0:
         parametros["offset"] = offset
     if telefono is not None:
         parametros["telefono"] = telefono
-    if enviar_boletin is not None:
-        parametros["enviar_boletin"] = enviar_boletin
     try:
         respuesta = requests.get(
             f"{BASE_URL}/cit_clientes",

@@ -21,11 +21,11 @@ def consultar(
     autoriza_mensajes: bool = None,
     curp: str = None,
     email: str = None,
+    enviar_boletin: bool = None,
     limit: int = LIMIT,
     nombres: str = None,
     offset: int = 0,
     telefono: str = None,
-    enviar_boletin: bool = None,
 ):
     """Consultar clientes"""
     rich.print("Consultar clientes...")
@@ -36,17 +36,17 @@ def consultar(
             autoriza_mensajes=autoriza_mensajes,
             curp=curp,
             email=email,
+            enviar_boletin=enviar_boletin,
             limit=limit,
             nombres=nombres,
             offset=offset,
             telefono=telefono,
-            enviar_boletin=enviar_boletin,
         )
     except CLIAnyError as error:
         typer.secho(str(error), fg=typer.colors.RED)
         raise typer.Exit()
     console = rich.console.Console()
-    table = rich.table.Table("ID", "Creado", "Nombres", "A. Primero", "A. Segundo", "CURP", "e-mail", "Telefono", "MD5", "SHA256", "E. B.")
+    table = rich.table.Table("ID", "Creado", "Nombres", "A. Primero", "A. Segundo", "CURP", "e-mail", "Telefono", "MD5", "SHA256", "A.M.", "E.B.")
     for registro in respuesta["items"]:
         creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
         table.add_row(
@@ -60,6 +60,7 @@ def consultar(
             registro["telefono"],
             "" if registro["contrasena_md5"] == "" else "****",
             "" if registro["contrasena_sha256"] == "" else "****",
+            "SI" if registro["autoriza_mensajes"] else "",
             "SI" if registro["enviar_boletin"] else "",
         )
     console.print(table)
