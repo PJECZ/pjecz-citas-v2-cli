@@ -31,6 +31,8 @@ def consultar(
     cit_servicio_clave: str = None,
     estado: str = None,
     inicio: str = None,
+    inicio_desde: str = None,
+    inicio_hasta: str = None,
     guardar: bool = False,
     limit: int = LIMIT,
     oficina_id: int = None,
@@ -49,6 +51,8 @@ def consultar(
             cit_servicio_clave=cit_servicio_clave,
             estado=estado,
             inicio=inicio,
+            inicio_desde=inicio_desde,
+            inicio_hasta=inicio_hasta,
             limit=limit,
             oficina_id=oficina_id,
             oficina_clave=oficina_clave,
@@ -69,7 +73,7 @@ def consultar(
             escritor = csv.writer(archivo)
             escritor.writerow(encabezados)
             for registro in respuesta["items"]:
-                creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
+                creado = datetime.strptime(registro["creado"][:18], "%Y-%m-%dT%H:%M:%S")
                 inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
                 escritor.writerow(
                     [
@@ -92,7 +96,7 @@ def consultar(
     for enca in encabezados:
         table.add_column(enca)
     for registro in respuesta["items"]:
-        creado = datetime.strptime(registro["creado"], "%Y-%m-%dT%H:%M:%S.%f")
+        creado = datetime.strptime(registro["creado"][:18], "%Y-%m-%dT%H:%M:%S")
         inicio = datetime.strptime(registro["inicio"], "%Y-%m-%dT%H:%M:%S")
         table.add_row(
             str(registro["id"]),
