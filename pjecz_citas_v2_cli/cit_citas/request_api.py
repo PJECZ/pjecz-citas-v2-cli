@@ -17,6 +17,8 @@ def get_cit_citas(
     cit_servicio_clave: str = None,
     estado: str = None,
     inicio: date = None,
+    inicio_desde: date = None,
+    inicio_hasta: date = None,
     limit: int = LIMIT,
     oficina_id: int = None,
     oficina_clave: str = None,
@@ -36,6 +38,10 @@ def get_cit_citas(
         parametros["estado"] = estado
     if inicio is not None:
         parametros["inicio"] = inicio
+    if inicio_desde is not None:
+        parametros["inicio_desde"] = inicio_desde
+    if inicio_hasta is not None:
+        parametros["inicio_hasta"] = inicio_hasta
     if oficina_id is not None:
         parametros["oficina_id"] = oficina_id
     if oficina_clave is not None:
