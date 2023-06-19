@@ -107,7 +107,7 @@ then
     echo "   PYTHONPATH: ${PYTHONPATH}"
     echo
     echo "-- Ejecutar el CLI"
-    alias cli="python3 ${PWD}/citas_v2/app.py"
+    alias cli="python3 ${PWD}/citas_v2_admin/app.py"
     echo "   cli --help"
     echo
 fi
